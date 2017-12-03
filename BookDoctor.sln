@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookDoctor.Web", "BookDoctor.Web\BookDoctor.Web.csproj", "{52F1E99F-4D25-42CA-8C40-DB26FD6E5BAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookDoctor.Data", "BookDoctor.Data\BookDoctor.Data.csproj", "{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{52F1E99F-4D25-42CA-8C40-DB26FD6E5BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52F1E99F-4D25-42CA-8C40-DB26FD6E5BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52F1E99F-4D25-42CA-8C40-DB26FD6E5BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
