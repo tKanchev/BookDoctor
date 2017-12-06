@@ -11,14 +11,28 @@
         {
         }
 
-        public DbSet<Appointment> Appointments { get; set; }
-        
-        public DbSet<Location> Locations { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }        
 
         public DbSet<Specialty> Specialties { get; set; }
+
+        public DbSet<MedicalCenter> MedicalCenters { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
-        {            
+        {
+            builder
+                .Entity<Appointment>()
+                .HasOne(a => a.Doctor)
+                .WithMany(dr => dr.DoctorAppointments)
+                .HasForeignKey(a => a.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Appointment>()
+                .HasOne(a => a.Patient)
+                .WithMany(p => p.PatientAppointments)
+                .HasForeignKey(a => a.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder
                 .Entity<User>()
                 .HasOne(dr => dr.Specialty)
@@ -27,9 +41,9 @@
 
             builder
                 .Entity<User>()
-                .HasOne(dr => dr.Location)
-                .WithMany(l => l.Doctors)
-                .HasForeignKey(dr => dr.LocationId);
+                .HasOne(dr => dr.MedicalCenter)
+                .WithMany(mc => mc.Doctors)
+                .HasForeignKey(dr => dr.MedicalCenterId);
 
             base.OnModelCreating(builder);
         }

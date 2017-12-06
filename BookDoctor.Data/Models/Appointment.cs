@@ -7,6 +7,8 @@
     {
         public int Id { get; set; }
 
+        public string Info { get; set; }
+
         [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }

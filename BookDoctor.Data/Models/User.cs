@@ -4,33 +4,40 @@
     using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    using static DataConstants;
 
     public class User : IdentityUser
     {
+        [Required]
+        [MinLength(NameMinLength)]
+        [MaxLength(NameMaxLength)]
         public string FirstName { get; set; }
 
+        [Required]
+        [MinLength(NameMinLength)]
+        [MaxLength(NameMaxLength)]
         public string LastName { get; set; }
 
         public DateTime Birthdate { get; set; }
-
+        
         public Sex Sex { get; set; }
-
-        public string Major { get; set; }
-
+        
         public string Info { get; set; }
-
-        //Phone
-
+        
         public bool IsDoctor { get; set; }
         
-        public int LocationId { get; set; }
-
-        public Location Location { get; set; }
-
         public int SpecialtyId { get; set; }
 
         public Specialty Specialty { get; set; }
 
-        public List<Appointment> Appointments { get; set; } = new List<Appointment>();        
+        public int MedicalCenterId { get; set; }
+
+        public MedicalCenter MedicalCenter { get; set; }
+
+        public List<Appointment> DoctorAppointments { get; set; } = new List<Appointment>();
+
+        public List<Appointment> PatientAppointments { get; set; } = new List<Appointment>();        
     }
 }

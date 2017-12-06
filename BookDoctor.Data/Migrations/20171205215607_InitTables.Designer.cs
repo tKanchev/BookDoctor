@@ -12,9 +12,10 @@ using System;
 namespace BookDoctor.Data.Migrations
 {
     [DbContext(typeof(BookDoctorDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171205215607_InitTables")]
+    partial class InitTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
