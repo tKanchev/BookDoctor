@@ -59,6 +59,7 @@
             .Appointments
             .Where(a => a.PatientId == patientId)
             .OrderByDescending(a => a.Date)
+            .ThenByDescending(a => a.TimeStart)
             .ProjectTo<AppointmentServiceModel>()
             .ToListAsync();
     }

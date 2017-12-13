@@ -229,6 +229,8 @@
             })
             .ToList();
 
+            model.Birthdate = DateTime.Now;
+
             ViewData["ReturnUrl"] = returnUrl;
             return View(model);
         }
