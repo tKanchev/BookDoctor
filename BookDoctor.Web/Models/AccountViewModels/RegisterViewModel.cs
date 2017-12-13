@@ -1,13 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BookDoctor.Web.Models.AccountViewModels
+﻿namespace BookDoctor.Web.Models.AccountViewModels
 {
+    using BookDoctor.Data.Models.EnumTypes;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    using static Data.DataConstants;
+
     public class RegisterViewModel
     {
+        [Required]
+        [MinLength(NameMinLength)]
+        [MaxLength(NameMaxLength)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(NameMinLength)]
+        [MaxLength(NameMaxLength)]
+        public string LastName { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Birthdate { get; set; }
+
+        public Sex Sex { get; set; }
+
+        public string Info { get; set; }
+
+        [Display(Name = "Register as a doctor?")]
+        public bool IsDoctor { get; set; }
+
+        public int MedicalCenterId { get; set; }
+
+        public IEnumerable<SelectListItem> MedicalCenters { get; set; }
+
+        public int SpecialtyId { get; set; }
+
+        public IEnumerable<SelectListItem> Specialties { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

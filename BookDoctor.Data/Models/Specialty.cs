@@ -14,6 +14,6 @@
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
-        public List<User> Doctors { get; set; }
+        public List<User> Doctors { get; set; } = new List<User>();
     }
 }

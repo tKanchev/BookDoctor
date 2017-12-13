@@ -36,9 +36,9 @@ namespace BookDoctor.Data.Migrations
                     b.Property<string>("PatientId")
                         .IsRequired();
 
-                    b.Property<DateTime>("TimeEnd");
+                    b.Property<TimeSpan>("TimeEnd");
 
-                    b.Property<DateTime>("TimeStart");
+                    b.Property<TimeSpan>("TimeStart");
 
                     b.HasKey("Id");
 
@@ -110,7 +110,7 @@ namespace BookDoctor.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<int>("MedicalCenterId");
+                    b.Property<int?>("MedicalCenterId");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -128,7 +128,7 @@ namespace BookDoctor.Data.Migrations
 
                     b.Property<int>("Sex");
 
-                    b.Property<int>("SpecialtyId");
+                    b.Property<int?>("SpecialtyId");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -277,13 +277,11 @@ namespace BookDoctor.Data.Migrations
                 {
                     b.HasOne("BookDoctor.Data.Models.MedicalCenter", "MedicalCenter")
                         .WithMany("Doctors")
-                        .HasForeignKey("MedicalCenterId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MedicalCenterId");
 
                     b.HasOne("BookDoctor.Data.Models.Specialty", "Specialty")
                         .WithMany("Doctors")
-                        .HasForeignKey("SpecialtyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SpecialtyId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

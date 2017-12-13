@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookDoctor.Web", "BookDoctor.Web\BookDoctor.Web.csproj", "{52F1E99F-4D25-42CA-8C40-DB26FD6E5BAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookDoctor.Web", "BookDoctor.Web\BookDoctor.Web.csproj", "{52F1E99F-4D25-42CA-8C40-DB26FD6E5BAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookDoctor.Data", "BookDoctor.Data\BookDoctor.Data.csproj", "{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookDoctor.Data", "BookDoctor.Data\BookDoctor.Data.csproj", "{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookDoctor.Services", "BookDoctor.Services\BookDoctor.Services.csproj", "{17EC1C3D-B77A-4B6B-AAEE-2E65D8A1B9E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookDoctor.Common", "BookDoctor.Common\BookDoctor.Common.csproj", "{A8DDC029-DA11-49B2-97CF-F3099F5200CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C33A818D-7161-4C9B-AD9D-8A5DEC585EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17EC1C3D-B77A-4B6B-AAEE-2E65D8A1B9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17EC1C3D-B77A-4B6B-AAEE-2E65D8A1B9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17EC1C3D-B77A-4B6B-AAEE-2E65D8A1B9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17EC1C3D-B77A-4B6B-AAEE-2E65D8A1B9E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8DDC029-DA11-49B2-97CF-F3099F5200CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8DDC029-DA11-49B2-97CF-F3099F5200CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8DDC029-DA11-49B2-97CF-F3099F5200CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8DDC029-DA11-49B2-97CF-F3099F5200CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

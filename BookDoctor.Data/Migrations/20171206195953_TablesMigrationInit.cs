@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BookDoctor.Data.Migrations
 {
-    public partial class InitTables : Migration
+    public partial class TablesMigrationInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,8 +55,7 @@ namespace BookDoctor.Data.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "MedicalCenterId",
                 table: "AspNetUsers",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "Sex",
@@ -67,8 +66,7 @@ namespace BookDoctor.Data.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "SpecialtyId",
                 table: "AspNetUsers",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Appointments",
@@ -167,7 +165,7 @@ namespace BookDoctor.Data.Migrations
                 column: "MedicalCenterId",
                 principalTable: "MedicalCenters",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Specialties_SpecialtyId",
@@ -175,7 +173,7 @@ namespace BookDoctor.Data.Migrations
                 column: "SpecialtyId",
                 principalTable: "Specialties",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUserTokens_AspNetUsers_UserId",

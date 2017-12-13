@@ -28,11 +28,11 @@
         
         public bool IsDoctor { get; set; }
         
-        public int SpecialtyId { get; set; }
+        public int? SpecialtyId { get; set; }
 
         public Specialty Specialty { get; set; }
 
-        public int MedicalCenterId { get; set; }
+        public int? MedicalCenterId { get; set; }
 
         public MedicalCenter MedicalCenter { get; set; }
 

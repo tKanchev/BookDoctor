@@ -1,14 +1,18 @@
 ﻿namespace BookDoctor.Web.Controllers
 {
     using BookDoctor.Data.Models;
+    using BookDoctor.Services.Admin;
+    using BookDoctor.Web.Infrastructure;
     using BookDoctor.Web.Models.AccountViewModels;
     using BookDoctor.Web.Services;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Logging;
     using System;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -20,17 +24,23 @@
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IAdminMedCenterService _adminMedCenterService;
+        private readonly IAdminSpecialtyService _adminSpecialtyService;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IAdminMedCenterService adminMedCenterService,
+            IAdminSpecialtyService adminSpecialtyService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _adminMedCenterService = adminMedCenterService;
+            _adminSpecialtyService = adminSpecialtyService;
         }
 
         [TempData]
@@ -55,8 +65,6 @@
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -78,8 +86,7 @@
                     return View(model);
                 }
             }
-
-            // If we got this far, something failed, redisplay form
+            
             return View(model);
         }
 
@@ -87,7 +94,6 @@
         [AllowAnonymous]
         public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
         {
-            // Ensure the user has gone through the username & password screen first
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
             if (user == null)
@@ -202,10 +208,29 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public async Task<IActionResult> Register(string returnUrl = null)
         {
+            var medicalCenters = await _adminMedCenterService.AllAsync();
+            var specialties = await _adminSpecialtyService.AllAsync();
+
+            var model = new RegisterViewModel();
+
+            model.MedicalCenters = medicalCenters.Select(c => new SelectListItem
+            {
+                Text = $"{c.Name}, {c.Location}",
+                Value = c.Id.ToString()
+            })
+            .ToList();
+
+            model.Specialties = specialties.Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            })
+            .ToList();
+
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -216,24 +241,48 @@
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Birthdate = model.Birthdate,
+                    Sex = model.Sex,
+                    IsDoctor = model.IsDoctor,
+                    Info = model.Info,                    
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+
+                if (model.IsDoctor)
+                {
+                    user.SpecialtyId = model.SpecialtyId;
+                    user.MedicalCenterId = model.MedicalCenterId;
+                }
+                
                 var result = await _userManager.CreateAsync(user, model.Password);
+                
                 if (result.Succeeded)
                 {
+                    if (user.IsDoctor)
+                    {
+                        var doctor = await _userManager.FindByEmailAsync(user.Email);
+                        if (doctor != null)
+                            await _userManager.AddToRoleAsync(doctor, WebConstants.DoctorRole);
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
+
                 AddErrors(result);
             }
-
-            // If we got this far, something failed, redisplay form
+            
             return View(model);
         }
 

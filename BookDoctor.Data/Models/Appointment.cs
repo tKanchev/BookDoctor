@@ -14,12 +14,10 @@
         public DateTime Date { get; set; }
 
         [Required]
-        [DataType(DataType.Time)]
-        public DateTime TimeStart { get; set; }
+        public TimeSpan TimeStart { get; set; }
 
         [Required]
-        [DataType(DataType.Time)]
-        public DateTime TimeEnd { get; set; }
+        public TimeSpan TimeEnd { get; set; }
 
         [Required]
         public string DoctorId { get; set; }
@@ -30,6 +28,5 @@
         public string PatientId { get; set; }
 
         public User Patient { get; set; }
-
     }
 }

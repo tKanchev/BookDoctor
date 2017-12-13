@@ -34,16 +34,16 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .Entity<User>()
-                .HasOne(dr => dr.Specialty)
-                .WithMany(s => s.Doctors)
-                .HasForeignKey(dr => dr.SpecialtyId);
+                .Entity<MedicalCenter>()
+                .HasMany(mc => mc.Doctors)
+                .WithOne(dr => dr.MedicalCenter)
+                .HasForeignKey(dr => dr.MedicalCenterId);
 
             builder
-                .Entity<User>()
-                .HasOne(dr => dr.MedicalCenter)
-                .WithMany(mc => mc.Doctors)
-                .HasForeignKey(dr => dr.MedicalCenterId);
+                .Entity<Specialty>()
+                .HasMany(s => s.Doctors)
+                .WithOne(dr => dr.Specialty)
+                .HasForeignKey(dr => dr.SpecialtyId);
 
             base.OnModelCreating(builder);
         }
