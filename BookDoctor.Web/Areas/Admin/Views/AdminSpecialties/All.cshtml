@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SpecialtyServiceModel>
+@{
+    ViewData["Title"] = "Specialties";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
+{
+    <div class="alert alert-success">
+        @TempData[WebConstants.TempDataSuccessMessageKey]
+    </div>
+}
+@if (TempData.ContainsKey(WebConstants.TempDataErrorMessageKey))
+{
+    <div class="alert alert-danger">
+        @TempData[WebConstants.TempDataErrorMessageKey]
+    </div>
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>            
+            <th>Doctors</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var specialty in Model)
+        {
+            <tr>
+                <th>@specialty.Name</th>                
+                <th>
+                    <ul class="list-unstyled">
+                        @foreach (var doctor in specialty.Doctors)
+                        {
+                            <li>Dr. @doctor.LastName</li>
+                        }
+                    </ul>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>

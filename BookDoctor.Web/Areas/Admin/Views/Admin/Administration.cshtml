@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Administration";
+}
+
+<h2>Administration</h2>
+
+<h3>Medical Centers</h3>
+<a class="btn btn-success" asp-area="@WebConstants.AdminArea" asp-controller="AdminMedicalCenters" asp-action="Add">Add New Medical Center</a>
+<a class="btn btn-primary" asp-area="@WebConstants.AdminArea" asp-controller="AdminMedicalCenters" asp-action="All">Medical Centers</a>
+<br />
+<h3>Specialties</h3>
+<a class="btn btn-success" asp-area="@WebConstants.AdminArea" asp-controller="AdminSpecialties" asp-action="Add">Add New Specialty</a>
+<a class="btn btn-primary" asp-area="@WebConstants.AdminArea" asp-controller="AdminSpecialties" asp-action="All">Specialties</a>
+
+

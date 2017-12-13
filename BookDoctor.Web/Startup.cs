@@ -1,11 +1,14 @@
 ﻿namespace BookDoctor.Web
 {
+    using AutoMapper;
     using BookDoctor.Data;
     using BookDoctor.Data.Models;
+    using BookDoctor.Web.Infrastructure.Extensions;
     using BookDoctor.Web.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -18,26 +21,38 @@
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookDoctorDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
                 .AddEntityFrameworkStores<BookDoctorDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
+            services.AddDomainServices();
+            
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
-        }
+            services.AddAutoMapper();
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
+        }
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDatabaseMigration();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -55,6 +70,10 @@
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                      name: "areas",
+                      template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

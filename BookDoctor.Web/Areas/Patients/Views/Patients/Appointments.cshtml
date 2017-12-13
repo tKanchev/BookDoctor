@@ -1,0 +1,66 @@
+﻿@model IEnumerable<PatientAppointmentsListViewModel>
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
+{
+    <div class="alert alert-success">
+        @TempData[WebConstants.TempDataSuccessMessageKey]
+    </div>
+}
+@if (TempData.ContainsKey(WebConstants.TempDataErrorMessageKey))
+{
+    <div class="alert alert-danger">
+        @TempData[WebConstants.TempDataErrorMessageKey]
+    </div>
+}
+
+<a class="btn btn-primary" asp-area="@WebConstants.PatientsArea" asp-controller="Patients" asp-action="BookDoctor">Book Doctor</a>
+
+@{
+    var trClass = "bg-active";
+    var status = "Upcoming";
+} 
+
+<table class="table">
+    <thead>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <th scope="row" colspan="6" class="text-center">No Appointments</th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th>Status</th>
+                <th>Date</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Info</th>
+                <th>Doctor</th>
+            </tr>
+        }        
+    </thead>
+    <tbody>       
+        @foreach (var appointment in Model)
+        { 
+            @if (appointment.Date < DateTime.UtcNow)
+            {
+                trClass = "bg-danger";
+                status = "Passed";
+            }
+            <tr class="@trClass">
+                <th scope="row">@status</th>
+                <td>@appointment.Date.ToShortDateString()</td>
+                <td>@appointment.TimeStart</td>
+                <td>@appointment.TimeEnd</td>
+                <td>@appointment.Info</td>
+                <td>@appointment.DoctorName</td>
+            </tr>
+        }             
+    </tbody>
+</table>

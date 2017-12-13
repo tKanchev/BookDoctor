@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookDoctor.Common\BookDoctor.Common.csproj" />
+    <ProjectReference Include="..\BookDoctor.Data\BookDoctor.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Booking\Models\" />
+  </ItemGroup>
+
+</Project>
