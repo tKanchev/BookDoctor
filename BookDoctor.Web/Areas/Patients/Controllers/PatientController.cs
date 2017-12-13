@@ -137,6 +137,12 @@
                 return false;
             }
 
+            if (DateTime.Now.TimeOfDay > startTime)
+            {
+                TempData.AddErrorMessage("You cannot make an appointment in a past hour!");
+                return false;
+            }
+
             bool isDoctorAvailable = await this.bookingService.CheckAvailability(doctorId, date, startTime);
             if (!isDoctorAvailable)
             {

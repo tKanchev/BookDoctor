@@ -47,12 +47,20 @@
     </thead>
     <tbody>       
         @foreach (var appointment in Model)
-        { 
-            @if (appointment.Date < DateTime.UtcNow)
+        {
+            trClass = "bg-active";
+            status = "Upcoming";
+
+            if (appointment.Date < DateTime.Now.Date)
             {
                 trClass = "bg-danger";
                 status = "Passed";
-            }
+            }     
+            else if (appointment.Date == DateTime.Now.Date && DateTime.Now.TimeOfDay > appointment.TimeStart)
+            {
+                trClass = "bg-danger";
+                status = "Passed";
+            }            
             <tr class="@trClass">
                 <th scope="row">@status</th>
                 <td>@appointment.Date.ToShortDateString()</td>
