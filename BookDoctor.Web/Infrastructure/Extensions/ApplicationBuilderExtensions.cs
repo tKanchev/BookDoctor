@@ -53,7 +53,7 @@
                         adminUser = new User
                         {
                             Email = adminEmail,
-                            UserName = "admin",
+                            UserName = adminEmail,
                             FirstName = AdministratorRole,
                             LastName = AdministratorRole
                         };

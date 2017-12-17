@@ -137,7 +137,7 @@
                 return false;
             }
 
-            if (DateTime.Now.TimeOfDay > startTime)
+            if (DateTime.Now.Date == date && DateTime.Now.TimeOfDay > startTime)
             {
                 TempData.AddErrorMessage("You cannot make an appointment in a past hour!");
                 return false;
