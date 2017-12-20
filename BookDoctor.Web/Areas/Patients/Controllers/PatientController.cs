@@ -4,6 +4,7 @@
     using BookDoctor.Services.Booking;
     using BookDoctor.Services.Doctor;
     using BookDoctor.Web.Areas.Patients.Models;
+    using BookDoctor.Web.Infrastructure;
     using BookDoctor.Web.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -50,6 +51,11 @@
         [HttpPost]
         public async Task<IActionResult> BookDoctor(PatientAppointmentFormViewModel model)
         {
+            if (User.IsInRole(WebConstants.DoctorRole))
+            {
+                TempData.AddErrorMessage("You are logged as Doctor! If oyu want to book an appointment you have to login/register as Patient!");
+                return RedirectToAction("Schedule", "Doctors", new { area = "Doctors" });
+            }
             
             if (!ModelState.IsValid)
             {
@@ -91,6 +97,12 @@
 
         public async Task<IActionResult> BookDoctor()
         {
+            if (User.IsInRole(WebConstants.DoctorRole))
+            {
+                TempData.AddErrorMessage("You are logged as Doctor! If oyu want to book an appointment you have to login/register as Patient!");
+                return RedirectToAction("Schedule", "Doctors", new { area = "Doctors" });
+            }
+
             var doctors = await this.doctorService.AllAsync();
 
             var doctorsListItems = doctors.Select(dr => new SelectListItem

@@ -9,5 +9,5 @@
             $('.doctorInputs').hide();
         }
     });
-    $('.alert').fadeOut(4000);
+    $('.alert').fadeOut(6000);
 });

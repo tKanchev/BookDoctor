@@ -5,19 +5,6 @@
 
 <h2>@ViewData["Title"]</h2>
 
-@if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
-{
-    <div class="alert alert-success">
-        @TempData[WebConstants.TempDataSuccessMessageKey]
-    </div>
-}
-@if (TempData.ContainsKey(WebConstants.TempDataErrorMessageKey))
-{
-    <div class="alert alert-danger">
-        @TempData[WebConstants.TempDataErrorMessageKey]
-    </div>
-}
-
 <table class="table table-bordered table-hover">
     <thead>
         <tr>

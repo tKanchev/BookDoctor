@@ -6,6 +6,7 @@
 
     [Area(WebConstants.PatientsArea)]
     [Authorize]
+    [Authorize(Roles = null)]
     public class PatientsBaseController : Controller
     {
     }
