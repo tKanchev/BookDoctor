@@ -1,14 +1,37 @@
-﻿@model IEnumerable<AppointmentServiceModel>
+﻿@model DoctorScheduleViewModel
 @{
     ViewData["Title"] = "Daily Schedule";
 }
 
 <h2>@ViewData["Title"]</h2>
 
- 
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">View Schedule</button>
+        </form>
+    </div>
+</div>
+<br />
+@{ 
+    if (Model.Date == null)
+    {
+        <h3>Date: @DateTime.Now.Date.ToShortDateString()</h3>
+    }
+    else
+    {
+        <h3>Date: @Model.Date.Date.ToShortDateString()</h3>
+    }
+}
 <table class="table">
     <thead>
-        @if (Model.Count() == 0)
+        @if (Model.Appointments.Count() == 0)
         {
             <tr>
                 <th scope="row" colspan="6" class="text-center">No Appointments</th>
@@ -23,7 +46,7 @@
                 string patientName = "No Appointment";
                 string info = "";
                 string rowClass = "bg-active";
-                foreach (var appointment in Model)
+                foreach (var appointment in Model.Appointments)
                 {
                     if (i == appointment.TimeStart.Hours)
                     {
@@ -38,8 +61,12 @@
                     <td>@info</td>
                 </tr>
             }
-        }        
+        }
     </thead>
 </table>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
 
 

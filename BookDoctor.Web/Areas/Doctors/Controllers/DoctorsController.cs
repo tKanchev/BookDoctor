@@ -2,12 +2,10 @@
 {
     using BookDoctor.Data.Models;
     using BookDoctor.Services.Booking;
-    using BookDoctor.Services.ServiceCommonModels;
     using BookDoctor.Web.Areas.Doctors.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class DoctorsController : DoctorsBaseController
@@ -21,11 +19,16 @@
             this.bookingService = bookingService;
             this.userManager = userManager;
         }
-        public IActionResult Schedule()
+        public async Task<IActionResult> Schedule()
         {
+            var currentUser = await this.userManager.GetUserAsync(HttpContext.User);
+
+            var appointments = await this.bookingService.DoctorAppointmentsByDateAsync(currentUser.Id, DateTime.Now.Date);
+
             var model = new DoctorScheduleViewModel
             {
-                Date = DateTime.Today
+                Date = DateTime.Today,
+                Appointments = appointments
             };
 
             return View(model);
@@ -34,16 +37,25 @@
         [HttpPost]
         public IActionResult Schedule(DoctorScheduleViewModel model)
             => RedirectToAction(nameof(DailySchedule), model.Date);
-        
+
         public async Task<IActionResult> DailySchedule(DateTime date)
         {
             var currentUser = await this.userManager.GetUserAsync(HttpContext.User);
 
-            var dailySchedule = await this.bookingService.DoctorAppointmentsByDateAsync(currentUser.Id, date);
+            var appointments = await this.bookingService.DoctorAppointmentsByDateAsync(currentUser.Id, date);
 
-            return View(dailySchedule);
+            var model = new DoctorScheduleViewModel
+            {
+                Date = date,
+                Appointments = appointments
+            };
+
+            return View(model);
         }
-        
-        
+
+        [HttpPost]
+        public IActionResult DailySchedule(DoctorScheduleViewModel model)
+            => RedirectToAction(nameof(DailySchedule), model.Date);
+
     }
 }

@@ -19,6 +19,42 @@
     </div>
 </div>
 
+<table class="table">
+    <thead>
+        @if (Model.Appointments.Count() == 0)
+        {
+            <tr>
+                <th scope="row" colspan="6" class="text-center">No Appointments</th>
+            </tr>
+        }
+        else
+        {
+
+            for (int i = 8; i < 17; i++)
+            {
+                string hour = $"{i}:00";
+                string patientName = "No Appointment";
+                string info = "";
+                string rowClass = "bg-active";
+                foreach (var appointment in Model.Appointments)
+                {
+                    if (i == appointment.TimeStart.Hours)
+                    {
+                        patientName = appointment.Patient.FirstName;
+                        info = appointment.Info;
+                        rowClass = "bg-info";
+                    }
+                }
+                <tr class="@rowClass">
+                    <td>@hour</td>
+                    <td>@patientName</td>
+                    <td>@info</td>
+                </tr>
+            }
+        }
+    </thead>
+</table>
+
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
