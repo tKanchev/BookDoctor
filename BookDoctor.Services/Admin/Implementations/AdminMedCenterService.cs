@@ -36,5 +36,10 @@
                     .ProjectTo<MedicalCanterServiceModel>()
                     .ToListAsync();
 
+        public async Task<bool> MedCenterExists(int id)
+            => await this.db
+                .MedicalCenters
+                .AnyAsync(mc => mc.Id == id);
+                    
     }
 }

@@ -9,5 +9,7 @@
         Task AddAsync(string name);
 
         Task<IEnumerable<SpecialtyServiceModel>> AllAsync();
+
+        Task<bool> SpecialtyExists(int id);
     }
 }
