@@ -10,5 +10,7 @@
             string location);
 
         Task<IEnumerable<MedicalCanterServiceModel>> AllAsync();
+
+        Task<bool> MedCenterExists(int id);
     }
 }

@@ -41,5 +41,8 @@
                 .Specialties
                 .ProjectTo<SpecialtyServiceModel>()
                 .ToListAsync();
+
+        public async Task<bool> SpecialtyExists(int id)
+            => await this.db.Specialties.AnyAsync(s => s.Id == id);
     }
 }

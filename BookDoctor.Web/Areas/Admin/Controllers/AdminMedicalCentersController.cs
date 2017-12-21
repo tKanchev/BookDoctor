@@ -8,11 +8,11 @@
 
     public class AdminMedicalCentersController : AdminBaseController
     {
-        private readonly IAdminMedCenterService adminMedCenterService;
+        private readonly IAdminMedCenterService medCenters;
 
         public AdminMedicalCentersController(IAdminMedCenterService adminMedCenterService)
         {
-            this.adminMedCenterService = adminMedCenterService;
+            this.medCenters = adminMedCenterService;
         }
 
         public IActionResult Add()
@@ -26,7 +26,7 @@
                 return View(model);
             }
 
-            await this.adminMedCenterService
+            await this.medCenters
                 .AddAsync(
                     model.Name,
                     model.Location);
@@ -37,6 +37,6 @@
         }
 
         public async Task<IActionResult> All()
-            => View(await this.adminMedCenterService.AllAsync());
+            => View(await this.medCenters.AllAsync());
     }
 }

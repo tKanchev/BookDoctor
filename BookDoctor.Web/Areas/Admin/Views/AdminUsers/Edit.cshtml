@@ -1,0 +1,47 @@
+﻿@model UserFormViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>   
+            @if (Model.IsDoctor)
+            {
+                <div class="form-group">
+                    <label asp-for="MedicalCenterId"></label>
+                    <select name="MedicalCenterId" asp-items="@Model.MedicalCenters" class="form-control"></select>
+                    <span asp-validation-for="MedicalCenterId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SpecialtyId"></label>
+                    <select name="SpecialtyId" asp-items="@Model.Specialties" class="form-control"></select>
+                    <span asp-validation-for="SpecialtyId" class="text-danger"></span>
+                </div>
+            }
+
+            <input asp-for="Id" class="form-control hidden" value="@Model.Id"/>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-default" asp-area="@WebConstants.AdminArea" asp-controller="AdminUsers" asp-action="All">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
