@@ -4,19 +4,25 @@
 }
 
 <h2>@ViewData["Title"]</h2>
+
+<a class="btn btn-primary" asp-area="@WebConstants.AdminArea" asp-controller="AdminMedicalCenters" asp-action="Add">New Medical Center</a>
+<br />
+<br />
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Name</th>
             <th>Location</th>
-            <th></th>
+            <th>Doctors</th>            
         </tr>
     </thead>
     <tbody>
         @foreach (var medCenter in Model)
         {
-            <tr>
-                <th>@medCenter.Name</th>
+            <tr>     
+                <th>
+                    @medCenter.Name                    
+                </th>
                 <th>@medCenter.Location</th>
                 <th>
                     <ul class="list-unstyled">
@@ -25,7 +31,7 @@
                             <li>Dr. @doctor.LastName</li>                           
                         }                        
                     </ul>
-                </th>
+                </th>                
             </tr>
         }
     </tbody>
