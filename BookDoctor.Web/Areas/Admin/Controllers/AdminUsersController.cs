@@ -68,11 +68,16 @@
                         
                     })
                     .ToList();
-
-                model.MedicalCenters.First(x => x.Value == user.MedicalCenterId?.ToString()).Selected = true;
-                model.Specialties.First(x => x.Value == user.SpecialtyId?.ToString()).Selected = true;
-                model.MedicalCenters.First(x => x.Value == user.MedicalCenterId?.ToString()).Disabled = true;
-                model.Specialties.First(x => x.Value == user.SpecialtyId?.ToString()).Disabled = true;
+                if (user.MedicalCenterId != null )
+                {
+                    model.MedicalCenters.First(x => x.Value == user.MedicalCenterId.ToString()).Selected = true;
+                    model.MedicalCenters.First(x => x.Value == user.MedicalCenterId.ToString()).Disabled = true;
+                }
+                if (user.SpecialtyId != null)
+                {
+                    model.Specialties.First(x => x.Value == user.SpecialtyId.ToString()).Selected = true;
+                    model.Specialties.First(x => x.Value == user.SpecialtyId.ToString()).Disabled = true;
+                }                
             }
 
             return View(model);

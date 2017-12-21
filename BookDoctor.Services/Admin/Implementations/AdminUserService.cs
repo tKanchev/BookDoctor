@@ -47,8 +47,14 @@
             user.LastName = lastName;
             if (user.IsDoctor)
             {
-                user.MedicalCenterId = medCenterId;
-                user.SpecialtyId = specialtyId;
+                if (medCenterId != null)
+                {
+                    user.MedicalCenterId = medCenterId;
+                }
+                if (specialtyId != null)
+                {
+                    user.SpecialtyId = specialtyId;
+                }                
             }
 
             await this.db.SaveChangesAsync();
