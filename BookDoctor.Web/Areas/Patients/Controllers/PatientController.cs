@@ -99,7 +99,7 @@
         {
             if (User.IsInRole(WebConstants.DoctorRole))
             {
-                TempData.AddErrorMessage("You are logged as Doctor! If oyu want to book an appointment you have to login/register as Patient!");
+                TempData.AddErrorMessage("You are logged as Doctor! If you want to book an appointment you have to login/register as Patient!");
                 return RedirectToAction("Schedule", "Doctors", new { area = "Doctors" });
             }
 
